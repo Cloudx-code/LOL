@@ -107,9 +107,9 @@ func SendConversationMsg(msg interface{}, roomId string) error {
 		horseType = "牛马"
 	}
 	data.Body = horseType + ":" + name + ",近7场比赛KDA:" + strconv.FormatFloat(score, 'f', 3, 64) + "最近三把战绩为:" + kda
-	if name == "皮皮九逗比小青年" || name == "Just随便一个名字" {
+	if name == "皮皮九逗比小青年" || name == "Just随便一个名字" || name == "只有我干饭用盆么" {
 		data.Body = "恭喜你匹配到了传说中的半人马（偶然能当个人）:+" + name + "，希望本场比赛他能够发光发热，不要搞事！半人马的最近三把战绩为：" + kda
-		data.Body = "恭喜你匹配到了传说中的:+" + name + "（具体为什么神秘咱也不知道）他最近三把的战绩为：" + kda
+		data.Body = "恭喜你匹配到了传说中的:+" + name + "他最近三把的战绩为：" + kda
 	}
 	if name == "第一把位" {
 		if horseType == "下等马" || horseType == "牛马" {

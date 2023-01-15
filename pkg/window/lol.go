@@ -3,13 +3,13 @@ package admin
 import (
 	"errors"
 	"fmt"
+	"github.com/yusufpapurcu/wmi"
 	"regexp"
 	"strconv"
-	"github.com/yusufpapurcu/wmi"
 )
 
 var (
-	lolCommandlineReg = regexp.MustCompile(`--remoting-auth-token=(.+?)" "--app-port=(\d+)"`)
+	lolCommandlineReg     = regexp.MustCompile(`--remoting-auth-token=(.+?)" "--app-port=(\d+)"`)
 	ErrLolProcessNotFound = errors.New("未找到lol进程")
 )
 
@@ -30,7 +30,7 @@ func GetLolClientApiInfoV2() (int, string, error) {
 	if len(btsChunk) < 3 {
 		return port, token, ErrLolProcessNotFound
 	}
-	fmt.Println( string( btsChunk[0] ) )
+	fmt.Println(string(btsChunk[0]))
 
 	token = string(btsChunk[1])
 	port, err = strconv.Atoi(string(btsChunk[2]))

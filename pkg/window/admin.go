@@ -2,10 +2,10 @@ package admin
 
 import (
 	"fmt"
+	"golang.org/x/sys/windows"
 	"os"
 	"strings"
 	"syscall"
-	"golang.org/x/sys/windows"
 )
 
 func IsAdmin() bool {
@@ -16,7 +16,7 @@ func IsAdmin() bool {
 func MustRunWithAdmin() {
 	if !IsAdmin() {
 		RunMeElevated()
-	}else{
+	} else {
 		fmt.Println("已经处于管理员模式")
 	}
 }

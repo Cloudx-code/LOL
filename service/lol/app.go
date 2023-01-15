@@ -33,17 +33,17 @@ func ChampionSelectStart() error {
 	//2、根据房间id获取5个召唤师id
 	summonerIds := GetSummonerListByRoomId(roomId)
 	fmt.Println("召唤师名：", summonerIds)
-	// 3.根据5个召唤师id,分别查出各自的召唤师信息存起来
-	//summonerInfos := make( []SummonerInfo,0 )
-	//for _,summonerId := range summonerIds{
-	//	summonerInfo,err := GetSummonerInfoById( summonerId )
-	//	if err != nil{
-	//		log.Printf("id = %v的用户信息查询失败, err = %v\n",summonerId,err )
-	//		continue
-	//	}
-	//	summonerInfos = append( summonerInfos,summonerInfo )
-	//	fmt.Printf("召唤师信息: %v\n",summonerInfo )
-	//}
+	//3.根据5个召唤师id,分别查出各自的召唤师信息存起来
+	summonerInfos := make([]SummonerInfo, 0)
+	for _, summonerId := range summonerIds {
+		summonerInfo, err := GetSummonerInfoById(summonerId)
+		if err != nil {
+			log.Printf("id = %v的用户信息查询失败, err = %v\n", summonerId, err)
+			continue
+		}
+		summonerInfos = append(summonerInfos, summonerInfo)
+		fmt.Printf("召唤师信息: %v\n", summonerInfo)
+	}
 	// 5.根据5个召唤师信息,去计算各自的得分
 	userScoreMap := map[int64]UserScore{}
 	mu := sync.Mutex{}
@@ -63,8 +63,11 @@ func ChampionSelectStart() error {
 		}(summonerId)
 	}
 	wg.Wait()
+	i := 0
 	// 6.把计算好的得分发送到聊天框内
 	for _, msg := range userScoreMap {
+		fmt.Println("!!!!!!!!!!!!!!!!!!!!!!!!!,time:", i)
+		i++
 		err := SendConversationMsg(msg, roomId)
 		if err != nil {
 			log.Printf("发送消息时出现错误,err = %v\n", err)
